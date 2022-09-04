@@ -29,13 +29,10 @@ def capture_screen():
 def detect_enemy(screen):
     background_color = screen.getpixel((bx, by))
     
-    # enemy_color2 = screen.getpixel((ex + 10, ey))
-    # enemy_color3 = screen.getpixel((ex + 15, ey))
-    # enemy_color4 = screen.getpixel((ex + 20, ey))
-    # enemy_color5 = screen.getpixel((ex + 25, ey))
-
+    # If the distance between enemies is less than 400, keep the maximum distance set ex
     if ex < 400:
         max = ex 
+    # If not, calculate another 100 pixels ahead to ensure the bot will detect enemies
     else:
         max = ex +100   
 
@@ -43,15 +40,13 @@ def detect_enemy(screen):
         enemy_color1 = screen.getpixel((i, ey))
         if enemy_color1 != background_color:
             return True
-        # if enemy_color3 != background_color or enemy_color2 != background_color or enemy_color1 != background_color or enemy_color4 != background_color or enemy_color5 != background_color:
-        #     return True # Return True for a detected enemy
+        # return True for a detected enemy
     
 # Dino Jumps
 def jump():
     global ex
     pyautogui.press("up")
-    print("Jump!")
-    if ex < 600 :
+    if ex < 600: # Maximum distance between dino and enemies
         ex += 3  # Increment in detection region for increase speed of game
 
 
@@ -62,13 +57,5 @@ time.sleep(5.0)
 # Infinite Loop of bot
 while True:
     screen = capture_screen()
-    print(screen.getpixel((ex, ey)))
-    print(screen.getpixel((ex + 10, ey)))
-    print(screen.getpixel((ex + 20, ey)))
-    print(screen.getpixel((ex + 30, ey)))
-    print(screen.getpixel((ex + 40, ey)))
-    print("----------------------------")
     if detect_enemy(screen):
         jump()
-
-print("Ex:" + ex)
